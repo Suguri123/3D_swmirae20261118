@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#223e87">
+  <meta name="description" content="3D메이커 수업 준비를 위한 3D 프린터의 활용. 2026년 11월 18일 교육자료, 강사 이현숙.">
+  <title>3D 프린터의 활용 · 교육자료</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%23223e87'/%3E%3Ctext x='24' y='31' text-anchor='middle' font-family='Arial' font-weight='bold' font-size='22' fill='white'%3E3D%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="slides.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#stage">슬라이드로 이동</a>
+  <header class="toolbar">
+    <button id="menu" class="icon-button" aria-label="목차 열기" aria-expanded="false" aria-controls="sidebar" title="목차 및 검색">☰</button>
+    <div class="brand"><strong>3D 프린터의 활용</strong><span>2026. 11. 18. · 강사 이현숙</span></div>
+    <div class="toolbar-actions">
+      <button id="view-mode" aria-pressed="false" title="모든 슬라이드를 세로로 보기">모아보기</button>
+      <a class="download" href="3D-printer-education.pptx" download>원본 PPT</a>
+      <button id="fullscreen" title="전체화면 (F)">전체화면</button>
+    </div>
+  </header>
+  <div id="scrim" hidden></div>
+  <aside id="sidebar" aria-label="슬라이드 목차" hidden>
+    <div class="sidebar-heading"><h2>교육자료 목차</h2><button id="close-menu" class="icon-button" aria-label="목차 닫기">×</button></div>
+    <label class="search-label" for="search">슬라이드 검색</label>
+    <input id="search" type="search" placeholder="제목 또는 내용 검색" autocomplete="off">
+    <p id="search-count" class="muted" aria-live="polite">전체 54장</p>
+    <nav id="slide-list" aria-label="슬라이드 선택"></nav>
+  </aside>
+  <main id="stage" tabindex="-1" aria-label="교육 슬라이드">
+    <div id="single-view">
+      <figure id="slide-frame"><img id="slide-image" width="1920" height="1080" alt="" fetchpriority="high"><figcaption id="slide-caption" class="sr-only"></figcaption></figure>
+    </div>
+    <div id="all-view" hidden></div>
+  </main>
+  <footer class="controls">
+    <div class="slide-info"><span id="section-name"></span><span id="slide-title"></span></div>
+    <div class="pager">
+      <button id="previous" class="icon-button" aria-label="이전 슬라이드" title="이전 슬라이드 (←)">‹</button>
+      <label class="page-label"><span class="sr-only">슬라이드 번호</span><input id="page" type="number" min="1" max="54" value="1" inputmode="numeric"><span>/ 54</span></label>
+      <button id="next" class="icon-button" aria-label="다음 슬라이드" title="다음 슬라이드 (→)">›</button>
+    </div>
+    <button id="text-toggle" aria-expanded="false" aria-controls="text-panel">본문 보기</button>
+    <div class="progress"><div id="progress-bar"></div></div>
+  </footer>
+  <dialog id="text-panel" aria-labelledby="text-title"><div class="dialog-heading"><h2 id="text-title"></h2><button id="close-text" class="icon-button" aria-label="본문 닫기">×</button></div><div id="text-content"></div></dialog>
+  <div id="announcement" class="sr-only" aria-live="polite"></div>
+  <noscript>이 교육자료를 보려면 JavaScript를 켜 주세요. <a href="3D-printer-education.pptx">원본 PowerPoint 다운로드</a></noscript>
+</body>
+</html>

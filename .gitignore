@@ -1,0 +1,7 @@
+source.pptx
+export-info.json
+slides-text.json
+*.tar.gz
+*.log
+node_modules/
+.preview/
