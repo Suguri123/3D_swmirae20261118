@@ -3,8 +3,15 @@ import path from 'node:path';
 const root = path.resolve(import.meta.dirname, '..');
 const source = JSON.parse(fs.readFileSync(path.join(root, 'slides-text.json'), 'utf8').replace(/^\uFEFF/, ''));
 const overrides = {1:'3D 프린터의 활용',2:'강사 소개 · 이현숙',3:'메이커 교육 작품',4:'지역 협력과 일상소품 모델링',5:'모델링 · 출력 · 도색',6:'드론 촬영 모델 후처리',7:'지역 캐릭터 굿즈',12:'장비 익히기',17:'3D 슬라이서 설치 및 환경 설정',25:'Bambu Studio 설정 화면',27:'메이커월드에서 샘플 찾아 출력하기',32:'틴커캐드로 이름표 열쇠고리 만들기',37:'실습 참고 이미지 1',38:'실습 참고 이미지 2',39:'AMS lite로 다색 출력하기',43:'수업 준비 활용법',46:'참고 자료',54:'출력물 나눔과 질의응답'};
-const sections = [{start:1,title:'과정 소개'},{start:12,title:'장비와 슬라이서'},{start:27,title:'실습 1 · 메이커월드'},{start:32,title:'실습 2 · 틴커캐드'},{start:39,title:'실습 3 · 다색 출력'},{start:43,title:'수업 준비 활용법'},{start:46,title:'참고 자료와 마무리'}];
-const slides = source.map(s => ({...s,title:overrides[s.number] || s.paragraphs[1] || s.paragraphs[0],section:sections.findLast(c=>s.number>=c.start).title,image:`assets/slides/slide-${String(s.number).padStart(2,'0')}.png`,thumb:`assets/slides/slide-${String(s.number).padStart(2,'0')}-thumb.png`}));
+const sourceSections = [{start:1,title:'과정 소개'},{start:12,title:'장비와 슬라이서'},{start:27,title:'실습 1 · 메이커월드'},{start:32,title:'실습 2 · 틴커캐드'},{start:39,title:'실습 3 · 다색 출력'},{start:43,title:'수업 준비 활용법'},{start:46,title:'참고 자료와 마무리'}];
+const included = source.filter(s => s.number < 2 || s.number > 7);
+const sections = sourceSections.map(section => ({...section,start:included.findIndex(s => s.number >= section.start) + 1}));
+const slides = included.map((s,index) => ({...s,number:index+1,sourceNumber:s.number,title:overrides[s.number] || s.paragraphs[1] || s.paragraphs[0],section:sourceSections.findLast(c=>s.number>=c.start).title,image:`assets/slides/slide-${String(s.number).padStart(2,'0')}.png`,thumb:`assets/slides/slide-${String(s.number).padStart(2,'0')}-thumb.png`}));
 fs.writeFileSync(path.join(root,'dist','slides.js'),`window.DECK = ${JSON.stringify({title:'3D 프린터의 활용',sections,slides})};\n`);
-fs.copyFileSync(path.join(root,'source.pptx'),path.join(root,'dist','3D-printer-education.pptx'));
+for (let number=2; number<=7; number++) {
+  for (const suffix of ['.png','-thumb.png']) {
+    const file = path.join(root,'dist','assets','slides',`slide-${String(number).padStart(2,'0')}${suffix}`);
+    if (fs.existsSync(file)) fs.unlinkSync(file);
+  }
+}
 console.log(`Prepared ${slides.length} slides.`);

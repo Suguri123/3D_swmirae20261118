@@ -2,6 +2,8 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const {slides, sections} = window.DECK;
+  $('page').max = slides.length;
+  $('page-total').textContent = `/ ${slides.length}`;
   let current = 1, overview = false, allBuilt = false;
   const clamp = n => Math.max(1, Math.min(slides.length, Number.isFinite(n) ? Math.round(n) : current));
   const hashPage = () => { const match = location.hash.match(/^#slide-(\d+)$/); return match ? clamp(Number(match[1])) : 1; };
@@ -43,7 +45,7 @@
         const button = document.createElement('button'); button.className = 'slide-link'; button.dataset.page = slide.number;
         button.setAttribute('aria-current', String(slide.number === current));
         const img = document.createElement('img'); img.src = slide.thumb; img.alt = ''; img.loading = 'lazy'; img.width = 384; img.height = 216;
-        const title = document.createElement('span'); const num = document.createElement('small'); num.textContent = `${String(slide.number).padStart(2,'0')} / 54`;
+        const title = document.createElement('span'); const num = document.createElement('small'); num.textContent = `${String(slide.number).padStart(2,'0')} / ${slides.length}`;
         title.append(num, document.createTextNode(slide.title)); button.append(img,title);
         button.addEventListener('click', () => {render(slide.number);setMenu(false);$('stage').focus();});
         $('slide-list').append(button);
@@ -58,7 +60,7 @@
       const figure = document.createElement('figure'); figure.id = `overview-${slide.number}`; figure.className = 'overview-slide';
       const button = document.createElement('button'); button.setAttribute('aria-label',`${slide.number}쪽 ${slide.title} 크게 보기`);
       const img = document.createElement('img'); img.src = slide.image; img.alt = slide.title; img.loading = 'lazy'; img.width = 1920; img.height = 1080;
-      const caption = document.createElement('figcaption'); caption.textContent = `${String(slide.number).padStart(2,'0')} / 54 · ${slide.title}`;
+      const caption = document.createElement('figcaption'); caption.textContent = `${String(slide.number).padStart(2,'0')} / ${slides.length} · ${slide.title}`;
       button.append(img); button.addEventListener('click',()=>{setOverview(false);render(slide.number);}); figure.append(button,caption); $('all-view').append(figure);
     }
   }
